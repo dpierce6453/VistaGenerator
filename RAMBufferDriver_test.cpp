@@ -37,7 +37,7 @@ const char  testString1[] = "\
 TEST(RAMBufferDriverTests, OpenTest)
 {
 	int fd;
-	char buf[sizeof(testString1)];
+	char *buf = new char[sizeof(testString1)];
 
 	RAMBufferDriver *rb = new RAMBufferDriver();
 	fd = rb->open("MyRamBuffer", O_RDWR | O_CREAT);
@@ -50,8 +50,6 @@ TEST(RAMBufferDriverTests, OpenTest)
 
 	rb->close(fd);
 	delete rb;
-	//delete buf;
-
-
+	delete [] buf;
 
 }

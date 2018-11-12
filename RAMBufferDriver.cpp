@@ -8,27 +8,27 @@
 #include "RAMBufferDriver.h"
 
 RAMBufferDriver::RAMBufferDriver() {
-	//m_rambuffer=0;
+	m_rambuffer=0;
 
 }
 
 RAMBufferDriver::~RAMBufferDriver() {
-	//if(m_rambuffer != 0)
-	//{
-	//	delete m_rambuffer;
-	//	m_rambuffer = 0;
-	//}
+	if(m_rambuffer != 0)
+	{
+		delete [] m_rambuffer;
+		m_rambuffer = 0;
+	}
 }
 
 // This function is called once when the test ends.
 	// It will be a signal to write and close XML for XML based tests.
 int RAMBufferDriver::close(int d)
 {
-	//if(m_rambuffer != 0)
-	//{
-	//	delete m_rambuffer;
-	//	m_rambuffer =0;
-	//}
+	if(m_rambuffer != 0)
+	{
+		delete [] m_rambuffer;
+		m_rambuffer =0;
+	}
 	return 0;
 }
 
@@ -36,8 +36,8 @@ int RAMBufferDriver::close(int d)
 	// In the case of XML it will create the buffer and or open the file
 int RAMBufferDriver::open(const char *path, int flags)
 {
-	//if(m_rambuffer == 0)
-	//	m_rambuffer = new char(1024);
+	if(m_rambuffer == 0)
+		m_rambuffer = new char[1024];
 	return 1;
 }
 

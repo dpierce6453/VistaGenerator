@@ -13,7 +13,7 @@ public:
 	iTestCreator();
 	virtual ~iTestCreator();
 
-	virtual void create() = 0;
+	virtual void LoadCodeplug_creator() = 0;
 };
 
 #endif /* ITESTCREATOR_H_ */

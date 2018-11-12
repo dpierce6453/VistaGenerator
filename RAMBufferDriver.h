@@ -26,7 +26,7 @@ public:
 		virtual void read(int d, void *buf, size_t nbytes);
 
 private:
-		char m_rambuffer[1024];
+		char *m_rambuffer;
 };
 
 #endif /* RAMBUFFERDRIVER_H_ */
