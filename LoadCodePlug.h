@@ -10,12 +10,25 @@
 
 #include "iTestCreator.h"
 
-class LoadCodePlug: public iTestCreator {
+class LoadCodePlug  {
 public:
 	LoadCodePlug();
 	virtual ~LoadCodePlug();
 
-	virtual void createTest() {};
+	void setTitle(char *title);
+	void setRadioId(char *radioID);
+	void setFileName(char *filename);
+
+	char *getTitle(void);
+	char *getRadioId( void );
+	char *getFileName( void );
+
+private:
+	char *m_pTitle;
+	char *m_pRadioId;
+	char *m_pFilename;
+
+	void setMemberString(char *memberstring, char *string);
 
 };
 

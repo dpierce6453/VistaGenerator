@@ -1,5 +1,5 @@
 /*
- * RAMBufferDriver_test.cpp
+ * LoadCodePlugTestCreatorVistaAPX8000_test.cpp
  *
  *  Created on: Nov 12, 2018
  *      Author: dan
@@ -7,11 +7,12 @@
 
 
 #include <CppUTest/TestHarness.h>
+#include <CppUTest/CommandLineTestRunner.h>
 
-#include "RAMBufferDriver.h"
+#include "TestCreatorVistaAPX8000.h"
 
 
-TEST_GROUP(RAMBufferDriverTests)
+TEST_GROUP(TestCreatorVistaAPX8000Tests)
 {
 	void setup()
 	{
@@ -33,22 +34,8 @@ const char  testString1[] = "\
         </Action>\n\
       </Step>\n";
 
-TEST(RAMBufferDriverTests, OpenTest)
+TEST(TestCreatorVistaAPX8000Tests, OpenTest)
 {
-	int fd;
-	char *buf = new char[sizeof(testString1)];
 
-	RAMBufferDriver *rb = new RAMBufferDriver();
-	fd = rb->open("MyRamBuffer", O_RDWR | O_CREAT);
-
-	rb->write(fd, (void *)testString1, sizeof(testString1));
-
-	rb->read(fd, buf, sizeof(testString1));
-
-	STRCMP_EQUAL((const char *)buf, (const char *)testString1);
-
-	rb->close(fd);
-	delete rb;
-	delete [] buf;
 
 }
