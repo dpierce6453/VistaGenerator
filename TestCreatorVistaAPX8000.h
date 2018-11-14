@@ -9,13 +9,14 @@
 #define TESTCREATORVISTAAPX8000_H_
 
 #include "iTestCreator.h"
+#include "LoadCodePlug.h"
 
 class TestCreator_VistaAPX8000: public iTestCreator {
 public:
 	TestCreator_VistaAPX8000();
 	virtual ~TestCreator_VistaAPX8000();
 
-	virtual void LoadCodeplug_creator();
+	virtual void *LoadCodeplug_creator(LoadCodePlug *lcp);
 
 };
 
