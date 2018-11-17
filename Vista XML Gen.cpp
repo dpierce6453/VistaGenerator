@@ -55,15 +55,14 @@ TEST(End2EndTests, LoadCodePlug)
 	lcp->setRadioId("Radio1");
 
 	// Create the test and write it
-	void *vCP = ptc->LoadCodeplug_creator(lcp);
-	ptd->write(fd, vCP, strlen((char *)vCP));
+	string vCP = ptc->LoadCodeplug_creator(lcp);
+	ptd->write(fd, (void *)vCP.c_str(), strlen(vCP.c_str()));
 
 	// Check the answer
 	char *buf = new char[sizeof(testString1)];
 	ptd->read(fd, buf, sizeof(testString1));
 	STRCMP_EQUAL((const char *)buf, (const char *)testString1);
 
-	delete [] (char *)vCP;
 	delete [] buf;
 	delete lcp;
 	delete ptd;

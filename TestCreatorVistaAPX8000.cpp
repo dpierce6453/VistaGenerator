@@ -5,21 +5,22 @@
  *      Author: dan
  */
 
-
+#include <iostream>
 #include <cstring>
+#include <string>
 #include <stdio.h>
+
+using namespace std;
 
 #include "TestCreatorVistaAPX8000.h"
 
-
-const char  testString1[] = "\
-      <Step Text=\"%s\">\n\
-        <Action Id=\"LOADCODEPLUG\" ControllerId=\"%s\">\n\
-          <Property Id=\"LOADCODEPLUG\" Value=\"%s\">\n\
-            <Property Id=\"LOADTYPE\" Value=\"{PBA}\" />\n\
-          </Property>\n\
-        </Action>\n\
-      </Step>\n";
+string str1("<Step Text=\"%s\">\n"); // @suppress("Type cannot be resolved")
+string str2("<Action Id=\"LOADCODEPLUG\" ControllerId=\"%s\">\n");
+string str3("<Property Id=\"LOADCODEPLUG\" Value=\"%s\">\n");
+string str4("<Property Id=\"LOADTYPE\" Value=\"{PBA}\" />\n");
+string str5("</Property>\n");
+string str6("</Action>\n");
+string str7("</Step>\n");
 
 
 TestCreator_VistaAPX8000::TestCreator_VistaAPX8000() {
@@ -31,14 +32,59 @@ TestCreator_VistaAPX8000::~TestCreator_VistaAPX8000() {
 	// TODO Auto-generated destructor stub
 }
 
-void *TestCreator_VistaAPX8000::LoadCodeplug_creator(LoadCodePlug *lcp)
+string &TestCreator_VistaAPX8000::LoadCodeplug_creator(LoadCodePlug *lcp)
 {
-	//create a buffer big enough to hold the string
-	unsigned int length;
-	length = strlen((const char *)lcp->getTitle()) + strlen ((const char *)lcp->getRadioId()) + strlen((const char *)lcp->getFileName()) + strlen(testString1);
-	char *pBuf = new char[length];
-	sprintf(pBuf, testString1, lcp->getTitle(), lcp->getRadioId(), lcp->getFileName());
+	int pos;
+	m_ret.assign(str1 + str2 + str3 + str4 + str5 + str6 + str7);
+	pos = findoccurrence("%s",1);
+	m_ret.replace(pos,2,lcp->getTitle());
+	pos = findoccurrence("%s",1);
+	m_ret.replace(pos,2,lcp->getRadioId());
+	pos = findoccurrence("%s",1);
+	m_ret.replace(pos,2,lcp->getFileName());
 
-	return (void *)pBuf;
+	setlevel(3);
+
+	return m_ret;
+
 }
+const string spaces("                              "); // 30 spaces - enough for 15 levels
+
+int TestCreator_VistaAPX8000::findoccurrence(const char *str, int number)
+{
+	int ret;
+	for(int j=0, position = 0; j<number; j++)
+	{
+		ret = m_ret.find(str, position);
+		position = ret+1;
+	}
+	return ret;
+}
+void TestCreator_VistaAPX8000::setlevel(int level)
+{
+		int numlevels = 0;
+
+		// find the number of strings we are dealing with.
+		int position = 0;
+		int location;
+		while((location = m_ret.find("<", position)) != string::npos)
+		{
+			position = location+1;
+			numlevels++;
+		}
+		for(int i=0; i<numlevels; i++)
+		{
+			location = findoccurrence("<", i+1);
+			m_ret.insert(location, spaces.substr(0, level*2));
+			if (i< (numlevels/2) )
+			{
+				level++;
+			}
+			else
+			{
+				level--;
+			}
+		}
+}
+
 
